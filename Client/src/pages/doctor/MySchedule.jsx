@@ -73,14 +73,14 @@ export default function MySchedule() {
   };
 
   useEffect(() => {
-    loadSchedule(date).catch(() => toast.error("Failed to load schedule"));
+    loadSchedule(date).catch(() => toast.error("Unable to load schedule"));
   }, [date]);
 
   const handleStatusUpdate = async (apptId, nextStatus) => {
     setUpdating(true);
     try {
       await updateAppointmentStatus(apptId, nextStatus);
-      toast.success(`Appointment marked as ${nextStatus}!`);
+      toast.success(`Appointment updated to ${nextStatus}.`);
       await loadSchedule(date);
     } catch (err) {
       toast.error(
@@ -156,7 +156,7 @@ export default function MySchedule() {
                   <div className="space-y-3">
                     {list.length === 0 ? (
                       <p className="text-sm text-gray-400 py-4 text-center">
-                        No appointments in this status.
+                        No appointments in this category.
                       </p>
                     ) : (
                       list.map((appt) => {
@@ -172,7 +172,7 @@ export default function MySchedule() {
                           >
                             <div className="space-y-1">
                               <p className="text-sm font-semibold text-gray-900">
-                                {appt.patientId?.name || "Anonymous Patient"}
+                                {appt.patientId?.name || "Unnamed patient"}
                               </p>
                               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
                                 <span className="font-medium text-gray-700">
@@ -189,7 +189,7 @@ export default function MySchedule() {
                                 {appt.patientId?.age && (
                                   <>
                                     <span>•</span>
-                                    <span>{appt.patientId.age} yrs</span>
+                                    <span>{appt.patientId.age} years</span>
                                   </>
                                 )}
                               </div>
@@ -213,7 +213,7 @@ export default function MySchedule() {
                                   <button
                                     onClick={() => openConfirmModal(appt)}
                                     disabled={updating}
-                                    title="Confirm Appointment"
+                                    title="Confirm appointment"
                                     className="p-1.5 bg-green-50 text-green-600 border border-green-200 hover:bg-green-100 hover:text-green-700 rounded-lg transition-colors"
                                   >
                                     <Check size={16} />
@@ -223,7 +223,7 @@ export default function MySchedule() {
                                       handleStatusUpdate(appt._id, "cancelled")
                                     }
                                     disabled={updating}
-                                    title="Cancel Appointment"
+                                    title="Cancel appointment"
                                     className="p-1.5 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors"
                                   >
                                     <X size={16} />
@@ -235,29 +235,29 @@ export default function MySchedule() {
                                 <>
                                   <Link
                                     to={`/doctor/prescription/${appt.patientId?._id}`}
-                                    title="Write Prescription"
+                                    title="Issue prescription"
                                     className="py-1 px-2.5 bg-primary-50 text-primary-600 border border-primary-200 hover:bg-primary-100 font-medium text-xs rounded-lg transition-colors flex items-center gap-1"
                                   >
                                     <FileText size={13} />
-                                    Prescribe
+                                    Issue prescription
                                   </Link>
                                   <button
                                     onClick={() =>
                                       handleStatusUpdate(appt._id, "completed")
                                     }
                                     disabled={updating}
-                                    title="Complete (Tick) Appointment"
+                                    title="Complete appointment"
                                     className="py-1 px-2.5 bg-green-600 text-white font-medium text-xs hover:bg-green-700 rounded-lg transition-colors flex items-center gap-1 shadow-sm"
                                   >
                                     <Check size={14} className="stroke-[3]" />
-                                    Complete
+                                    Complete visit
                                   </button>
                                   <button
                                     onClick={() =>
                                       handleStatusUpdate(appt._id, "cancelled")
                                     }
                                     disabled={updating}
-                                    title="Cancel Appointment"
+                                    title="Cancel appointment"
                                     className="p-1.5 bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 hover:text-red-700 rounded-lg transition-colors"
                                   >
                                     <X size={16} />
@@ -268,11 +268,11 @@ export default function MySchedule() {
                               {status === "completed" && (
                                 <Link
                                   to={`/doctor/prescription/${appt.patientId?._id}`}
-                                  title="Write Prescription"
+                                  title="Issue prescription"
                                   className="py-1 px-2.5 bg-primary-50 text-primary-600 border border-primary-200 hover:bg-primary-100 font-medium text-xs rounded-lg transition-colors flex items-center gap-1"
                                 >
                                   <FileText size={13} />
-                                  Prescribe
+                                  Issue prescription
                                 </Link>
                               )}
                             </div>
@@ -294,7 +294,7 @@ export default function MySchedule() {
         onClose={closeConfirmModal}
       >
         <p className="text-sm text-gray-600 mb-3">
-          Add a brief clinical note or proceed to full prescription.
+          Add a brief clinical note or proceed to prescription.
         </p>
         <textarea
           className="input-field"
@@ -310,10 +310,10 @@ export default function MySchedule() {
             Cancel
           </button>
           <button className="btn-secondary" onClick={confirmOnly}>
-            Confirm only
+            Confirm visit
           </button>
           <button className="btn-primary" onClick={confirmAndPrescribe}>
-            Confirm and prescribe
+            Confirm and issue prescription
           </button>
         </div>
       </Modal>

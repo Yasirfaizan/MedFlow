@@ -29,13 +29,13 @@ export default function AddDiagnosis() {
         toast.error(res.data.message);
       } else {
         setAiResult(res.data.data.aiResult.data);
-        toast.success("AI assessment complete");
+        toast.success("Assessment completed");
       }
     } catch (err) {
       if (err.response?.status === 403) {
-        toast.error("Upgrade to Pro for AI assessment features");
+        toast.error("Upgrade to Pro to access AI assessment");
       } else {
-        toast.error("Assessment unavailable. Document manually.");
+        toast.error("Assessment unavailable. Document clinically.");
       }
     } finally {
       setLoading(false);
@@ -58,7 +58,7 @@ export default function AddDiagnosis() {
                 ) : (
                   <Brain size={14} />
                 )}
-                {loading ? "Analyzing..." : "Run AI assessment"}
+                {loading ? "Analyzing..." : "Run assessment"}
               </button>
             </form>
           </div>
@@ -67,7 +67,7 @@ export default function AddDiagnosis() {
             <div className="card">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
                 <Brain size={16} className="text-primary-500" /> Assessment
-                Summary
+                summary
               </h3>
               {aiResult.fallback ? (
                 <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 p-3 rounded-lg text-sm">
