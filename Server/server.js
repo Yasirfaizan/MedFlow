@@ -21,7 +21,7 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   "https://med-flow-two-livid.vercel.app",
   "http://localhost:5173",
-].filter(Boolean);
+];
 
 app.use(
   cors({
