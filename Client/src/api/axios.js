@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    import.meta.env.VITE_API_URL ||
+    "https://localhost:5000/api" ||
     "https://medflow-production-9af6.up.railway.app/api",
 });
 
