@@ -9,12 +9,14 @@ export default function PatientDashboard() {
       breadcrumb={["Patient", "Dashboard"]}
     >
       <div className="card">
-        <h2 className="text-lg font-semibold text-gray-900">Welcome</h2>
+        <h2 className="text-lg font-semibold text-gray-900">
+          Patient Overview
+        </h2>
         <p className="text-sm text-gray-500 mt-1">
           {user?.name} • {user?.email}
         </p>
         <p className="text-sm text-gray-500 mt-4">
-          View your appointments and prescriptions from the sidebar.
+          Access appointments and prescriptions from the navigation panel.
         </p>
       </div>
     </PageWrapper>

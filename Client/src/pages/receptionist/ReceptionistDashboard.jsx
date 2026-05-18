@@ -13,27 +13,27 @@ export default function ReceptionistDashboard() {
   useEffect(() => {
     getPatients()
       .then((res) => setPatientCount(res.data.data.length || 0))
-      .catch(() => toast.error("Failed to load patients"));
+      .catch(() => toast.error("Unable to load patients"));
 
     getAppointments()
       .then((res) => setAppointmentCount(res.data.data.length || 0))
-      .catch(() => toast.error("Failed to load appointments"));
+      .catch(() => toast.error("Unable to load appointments"));
   }, []);
 
   return (
     <PageWrapper
-      title="Receptionist Dashboard"
+      title="Reception Dashboard"
       breadcrumb={["Receptionist", "Dashboard"]}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <StatCard
-          title="Total Patients"
+          title="Total patients"
           value={patientCount}
           icon={Users}
           color="primary"
         />
         <StatCard
-          title="Appointments"
+          title="Scheduled appointments"
           value={appointmentCount}
           icon={CalendarCheck}
           color="yellow"

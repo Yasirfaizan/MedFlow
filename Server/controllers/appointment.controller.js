@@ -87,16 +87,19 @@ exports.getAllAppointments = async (req, res) => {
     if (req.user.role === "patient") {
       const userDoc = await User.findById(req.user.userId);
 
-      // Match by phone (consistent with how bookAppointment creates the record)
-      let clinicalPatient = null;
-      if (userDoc?.phone) {
+      // Prefer the linked clinical profile created for this patient user
+      let clinicalPatient = await Patient.findOne({
+        createdBy: req.user.userId,
+      });
+
+      // Fallback to phone match for legacy records
+      if (!clinicalPatient && userDoc?.phone) {
         clinicalPatient = await Patient.findOne({ phone: userDoc.phone });
       }
 
       if (clinicalPatient) {
         filter.patientId = clinicalPatient._id;
       } else {
-        // No clinical profile yet — return empty list
         return success(res, []);
       }
     }

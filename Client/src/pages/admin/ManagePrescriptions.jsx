@@ -15,8 +15,7 @@ export default function ManagePrescriptions() {
 
   useEffect(() => {
     getAllPrescriptionsForAdmin()
-      .then((res) => setPrescriptions(res.data.data || res.data.data || []))
-
+      .then((res) => setPrescriptions(res.data.data || []))
       .catch(() => toast.error("Failed to load prescriptions"))
       .finally(() => setLoading(false));
   }, []);
@@ -55,7 +54,7 @@ export default function ManagePrescriptions() {
   if (loading) {
     return (
       <PageWrapper
-        title="Manage Prescriptions"
+        title="Prescription Oversight"
         breadcrumb={["Admin", "Prescriptions"]}
       >
         <div className="flex justify-center h-64 items-center">
@@ -67,7 +66,7 @@ export default function ManagePrescriptions() {
 
   return (
     <PageWrapper
-      title="Manage Prescriptions"
+      title="Prescription Oversight"
       breadcrumb={["Admin", "Prescriptions"]}
     >
       <div className="space-y-4">
@@ -81,7 +80,7 @@ export default function ManagePrescriptions() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="input-field pl-10 w-full"
-              placeholder="Search by patient or doctor name..."
+              placeholder="Search by patient or clinician name"
             />
           </div>
         </div>
@@ -89,7 +88,7 @@ export default function ManagePrescriptions() {
         <div className="space-y-3">
           {filtered.length === 0 ? (
             <div className="card text-sm text-gray-500">
-              No prescriptions found.
+              No prescriptions available.
             </div>
           ) : (
             filtered.map((p) => (
@@ -100,7 +99,7 @@ export default function ManagePrescriptions() {
                       {p?.patientId?.name || "Patient"}
                     </p>
                     <p className="text-xs text-gray-400">
-                      Prescribed by {p?.doctorId?.name || "Doctor"}
+                      Prescribed by {p?.doctorId?.name || "Clinician"}
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
                       {p.createdAt
@@ -119,13 +118,13 @@ export default function ManagePrescriptions() {
                     ) : (
                       <Download size={14} />
                     )}
-                    {downloadingId === p._id ? "Downloading" : "PDF"}
+                    {downloadingId === p._id ? "Downloading" : "Download"}
                   </button>
                 </div>
 
                 <div className="mt-4">
                   <p className="text-xs font-medium text-gray-400 mb-2">
-                    MEDICINES
+                    MEDICATIONS
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     {p.medicines?.map((m, idx) => (

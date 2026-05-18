@@ -25,12 +25,12 @@ export default function BookAppointment() {
   useEffect(() => {
     getPatients()
       .then((res) => setPatients(res.data.data || []))
-      .catch(() => toast.error("Failed to load patients"));
+      .catch(() => toast.error("Unable to load patients"));
 
     api
       .get("/users?role=doctor")
       .then((res) => setDoctors(res.data.data || []))
-      .catch(() => toast.error("Failed to load doctors"));
+      .catch(() => toast.error("Unable to load clinicians"));
   }, []);
 
   const onSubmit = async (e) => {
@@ -44,10 +44,12 @@ export default function BookAppointment() {
     setLoading(true);
     try {
       await bookAppointment(form);
-      toast.success("Appointment booked");
+      toast.success("Appointment scheduled");
       setForm(initialForm);
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to book appointment");
+      toast.error(
+        err.response?.data?.message || "Unable to schedule appointment",
+      );
     } finally {
       setLoading(false);
     }
@@ -55,8 +57,8 @@ export default function BookAppointment() {
 
   return (
     <PageWrapper
-      title="Book Appointment"
-      breadcrumb={["Receptionist", "Book Appointment"]}
+      title="Schedule Appointment"
+      breadcrumb={["Receptionist", "Schedule Appointment"]}
     >
       <form onSubmit={onSubmit} className="card space-y-4">
         <AppointmentForm
@@ -66,7 +68,7 @@ export default function BookAppointment() {
           patients={patients}
         />
         <div>
-          <p className="text-sm text-gray-500 mb-2">Pick time slot</p>
+          <p className="text-sm text-gray-500 mb-2">Select time slot</p>
           <SlotPicker
             value={form.timeSlot}
             onChange={(slot) => setForm({ ...form, timeSlot: slot })}
@@ -78,7 +80,7 @@ export default function BookAppointment() {
           </p>
         )}
         <button className="btn-primary" disabled={loading} type="submit">
-          {loading ? "Booking..." : "Book Appointment"}
+          {loading ? "Scheduling..." : "Schedule appointment"}
         </button>
       </form>
     </PageWrapper>

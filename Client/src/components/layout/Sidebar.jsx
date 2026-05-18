@@ -68,7 +68,7 @@ export default function Sidebar() {
             </div>
             <div>
               <p className="text-sm font-semibold text-gray-900">MedFlow</p>
-              <p className="text-xs text-gray-400">Clinic Management</p>
+              <p className="text-xs text-gray-400">Clinical Operations</p>
             </div>
           </div>
         </div>
@@ -98,8 +98,8 @@ export default function Sidebar() {
               <p className="text-xs text-gray-400 capitalize">{user?.role}</p>
             </div>
             {user?.subscriptionPlan === "pro" && (
-              <span className="text-xs bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded font-medium">
-                PRO
+              <span className="text-[10px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded font-semibold uppercase tracking-wide">
+                Pro
               </span>
             )}
           </div>

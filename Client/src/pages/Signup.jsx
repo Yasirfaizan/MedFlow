@@ -79,8 +79,11 @@ export default function Signup() {
       });
 
       login(loginRes.data.data.token, loginRes.data.data.user);
-      toast.success(res.data.message || `Account created successfully! Welcome, ${data.name}.`);
-      
+      toast.success(
+        res.data.message ||
+          `Account created successfully! Welcome, ${data.name}.`,
+      );
+
       const targetRole = loginRes.data.data.user.role;
       navigate(roleRedirects[targetRole]);
     } catch (err) {
@@ -94,12 +97,16 @@ export default function Signup() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className={`w-14 h-14 ${config.accent} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-sm`}>
+          <div
+            className={`w-14 h-14 ${config.accent} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-sm`}
+          >
             <UserPlus size={28} />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">{config.title} Sign Up</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {config.title} Registration
+          </h1>
           <p className="text-gray-400 text-sm mt-1">
-            Create an account to access your {config.title.toLowerCase()} dashboard
+            Create a secure account for clinical access
           </p>
         </div>
 
@@ -129,7 +136,7 @@ export default function Signup() {
 
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">
-                Email Address
+                Email address
               </label>
               <input
                 {...register("email", {
@@ -149,12 +156,15 @@ export default function Signup() {
 
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">
-                Phone Number
+                Phone number
               </label>
               <input
                 {...register("phone", {
                   required: "Phone number is required",
-                  pattern: { value: /^[0-9+\-\s]{7,15}$/, message: "Invalid phone number" },
+                  pattern: {
+                    value: /^[0-9+\-\s]{7,15}$/,
+                    message: "Invalid phone number",
+                  },
                 })}
                 type="tel"
                 className="input-field"
@@ -162,9 +172,17 @@ export default function Signup() {
                 onKeyDown={(e) => {
                   // Allow: backspace, delete, tab, escape, enter, arrows, home, end
                   const allowed = [
-                    "Backspace", "Delete", "Tab", "Escape", "Enter",
-                    "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown",
-                    "Home", "End",
+                    "Backspace",
+                    "Delete",
+                    "Tab",
+                    "Escape",
+                    "Enter",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "ArrowUp",
+                    "ArrowDown",
+                    "Home",
+                    "End",
                   ];
                   // Allow: +, -, space (valid phone chars)
                   const allowedChars = /^[0-9+\-\s]$/;
@@ -260,17 +278,18 @@ export default function Signup() {
               <div>
                 <div className="bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 mb-2">
                   <p className="text-xs text-blue-500 font-medium mb-1">
-                    🏆 Hackathon Demo — Admin Secret Code
+                    Demo access key (admin)
                   </p>
                   <p className="text-xs text-blue-400 mb-1.5">
-                    This key is exposed here for hackathon evaluation purposes only. In production, it would be distributed securely out-of-band.
+                    For evaluation only. In production, this key is distributed
+                    securely.
                   </p>
                   <p className="text-xs text-blue-700 font-mono select-all bg-blue-100 rounded px-2 py-1">
                     MedFlowAdminSecretKey2026
                   </p>
                 </div>
                 <label className="text-sm font-medium text-gray-700 block mb-1">
-                  Admin Secret Code
+                  Admin secret code
                 </label>
                 <input
                   {...register("adminSecretCode", {
@@ -294,7 +313,7 @@ export default function Signup() {
               className={`w-full py-2.5 px-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50 ${config.buttonAccent} focus:outline-none`}
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-              {loading ? "Creating..." : "Sign Up"}
+              {loading ? "Creating..." : "Create account"}
             </button>
           </form>
 

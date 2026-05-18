@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PageWrapper from "../../components/layout/PageWrapper";
 import {
   getDoctorSchedule,
   updateAppointmentStatus,
 } from "../../api/appointment.api";
 import Badge from "../../components/common/Badge";
+import Modal from "../../components/common/Modal";
 import toast from "react-hot-toast";
 import { Check, X, AlertTriangle, FileText } from "lucide-react";
 
@@ -56,9 +57,15 @@ const getAppTimeStatus = (dateStr, timeSlotStr, currentStatus) => {
 };
 
 export default function MySchedule() {
+  const navigate = useNavigate();
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [schedule, setSchedule] = useState(null);
   const [updating, setUpdating] = useState(false);
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    appt: null,
+    note: "",
+  });
 
   const loadSchedule = async (selected) => {
     const res = await getDoctorSchedule(selected);
@@ -84,12 +91,35 @@ export default function MySchedule() {
     }
   };
 
+  const openConfirmModal = (appt) => {
+    setConfirmModal({ open: true, appt, note: "" });
+  };
+
+  const closeConfirmModal = () => {
+    setConfirmModal({ open: false, appt: null, note: "" });
+  };
+
+  const confirmOnly = async () => {
+    if (!confirmModal.appt) return;
+    await handleStatusUpdate(confirmModal.appt._id, "confirmed");
+    closeConfirmModal();
+  };
+
+  const confirmAndPrescribe = async () => {
+    if (!confirmModal.appt) return;
+    await handleStatusUpdate(confirmModal.appt._id, "confirmed");
+    closeConfirmModal();
+    navigate(`/doctor/prescription/${confirmModal.appt.patientId?._id}`, {
+      state: { note: confirmModal.note },
+    });
+  };
+
   return (
     <PageWrapper title="My Schedule" breadcrumb={["Doctor", "Schedule"]}>
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="card">
           <label className="text-sm font-semibold text-gray-600">
-            Choose Schedule Date
+            Schedule date
           </label>
           <input
             className="input-field mt-2 max-w-xs"
@@ -126,7 +156,7 @@ export default function MySchedule() {
                   <div className="space-y-3">
                     {list.length === 0 ? (
                       <p className="text-sm text-gray-400 py-4 text-center">
-                        No appointments in this list.
+                        No appointments in this status.
                       </p>
                     ) : (
                       list.map((appt) => {
@@ -171,7 +201,7 @@ export default function MySchedule() {
                               {timeStatus.isWasted && (
                                 <div className="text-[10px] text-red-500 font-bold flex items-center gap-1 mt-1 bg-red-50 border border-red-100 px-2 py-0.5 rounded w-max">
                                   <AlertTriangle size={10} />
-                                  Patient Missed - Amount Wasted
+                                  No-show recorded
                                 </div>
                               )}
                             </div>
@@ -181,9 +211,7 @@ export default function MySchedule() {
                               {status === "pending" && (
                                 <>
                                   <button
-                                    onClick={() =>
-                                      handleStatusUpdate(appt._id, "confirmed")
-                                    }
+                                    onClick={() => openConfirmModal(appt)}
                                     disabled={updating}
                                     title="Confirm Appointment"
                                     className="p-1.5 bg-green-50 text-green-600 border border-green-200 hover:bg-green-100 hover:text-green-700 rounded-lg transition-colors"
@@ -259,6 +287,36 @@ export default function MySchedule() {
           })}
         </div>
       </div>
+
+      <Modal
+        open={confirmModal.open}
+        title="Confirm appointment"
+        onClose={closeConfirmModal}
+      >
+        <p className="text-sm text-gray-600 mb-3">
+          Add a brief clinical note or proceed to full prescription.
+        </p>
+        <textarea
+          className="input-field"
+          rows={3}
+          placeholder="Clinical note (optional)"
+          value={confirmModal.note}
+          onChange={(e) =>
+            setConfirmModal((prev) => ({ ...prev, note: e.target.value }))
+          }
+        />
+        <div className="flex justify-end gap-3 mt-4">
+          <button className="btn-secondary" onClick={closeConfirmModal}>
+            Cancel
+          </button>
+          <button className="btn-secondary" onClick={confirmOnly}>
+            Confirm only
+          </button>
+          <button className="btn-primary" onClick={confirmAndPrescribe}>
+            Confirm and prescribe
+          </button>
+        </div>
+      </Modal>
     </PageWrapper>
   );
 }

@@ -29,9 +29,11 @@ export default function MyPrescriptions() {
       ) : prescriptions.length === 0 ? (
         <div className="card text-center py-10">
           <FileText size={36} className="mx-auto text-gray-300 mb-3" />
-          <p className="text-sm font-medium text-gray-500">No prescriptions yet.</p>
+          <p className="text-sm font-medium text-gray-500">
+            No prescriptions on record.
+          </p>
           <p className="text-xs text-gray-400 mt-1">
-            Prescriptions written by your doctor will appear here.
+            Prescriptions issued by your clinician will appear here.
           </p>
         </div>
       ) : (
@@ -68,7 +70,7 @@ export default function MyPrescriptions() {
                   to={`/patient/prescriptions/${pres._id}`}
                   className="py-1.5 px-3 rounded-lg text-xs font-semibold border border-gray-200 text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors"
                 >
-                  View Details
+                  View details
                 </Link>
               </div>
             </div>

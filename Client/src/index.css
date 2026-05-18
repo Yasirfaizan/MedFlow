@@ -13,6 +13,18 @@
       -apple-system,
       "Segoe UI",
       sans-serif;
+    background-image:
+      radial-gradient(
+        circle at 10% 10%,
+        rgba(29, 158, 117, 0.08),
+        transparent 40%
+      ),
+      radial-gradient(
+        circle at 90% 0%,
+        rgba(14, 165, 233, 0.08),
+        transparent 35%
+      );
+    background-attachment: fixed;
   }
   * {
     @apply box-border;
@@ -36,7 +48,7 @@
     @apply w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
   }
   .card {
-    @apply bg-white rounded-xl border border-gray-100 shadow-sm p-5;
+    @apply bg-white rounded-2xl border border-gray-100 shadow-sm p-5;
   }
   .badge-green {
     @apply bg-primary-50 text-primary-600 text-xs px-2 py-1 rounded-full font-medium;

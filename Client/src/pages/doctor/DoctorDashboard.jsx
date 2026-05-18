@@ -61,19 +61,19 @@ export default function DoctorDashboard() {
             color="primary"
           />
           <StatCard
-            title="Monthly Appointments"
+            title="Appointments This Month"
             value={stats?.monthlyAppts || 0}
             icon={Activity}
             color="blue"
           />
           <StatCard
-            title="Prescriptions"
+            title="Prescriptions Issued"
             value={stats?.totalPrescriptions || 0}
             icon={FileText}
             color="yellow"
           />
           <StatCard
-            title="AI Symptom Checks"
+            title="AI Assessments"
             value={stats?.totalAIChecks || 0}
             icon={Brain}
             color="red"

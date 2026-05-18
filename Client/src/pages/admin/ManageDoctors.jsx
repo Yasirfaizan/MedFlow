@@ -24,7 +24,7 @@ export default function ManageDoctors() {
   };
 
   useEffect(() => {
-    loadDoctors().catch(() => toast.error("Failed to load doctors"));
+    loadDoctors().catch(() => toast.error("Unable to load clinicians"));
   }, []);
 
   const onSubmit = async (e) => {
@@ -38,11 +38,11 @@ export default function ManageDoctors() {
     setLoading(true);
     try {
       await api.post("/users", { ...form, role: "doctor" });
-      toast.success("Doctor added");
+      toast.success("Clinician added");
       setForm(initialForm);
       loadDoctors();
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add doctor");
+      toast.error(err.response?.data?.message || "Unable to add clinician");
     } finally {
       setLoading(false);
     }
@@ -53,21 +53,24 @@ export default function ManageDoctors() {
       // When activating a doctor, also mark them as approved for booking.
       if (!isActive) {
         await api.patch(`/users/admin/approve-doctor/${id}`);
-        toast.success("Doctor approved");
+        toast.success("Clinician approved");
       } else {
         // When deactivating, keep approval status as-is, but stop booking.
         await api.put(`/users/${id}`, { isActive: false });
-        toast.success("Doctor deactivated");
+        toast.success("Clinician access deactivated");
       }
 
       loadDoctors();
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to update status");
+      toast.error(err.response?.data?.message || "Unable to update access");
     }
   };
 
   return (
-    <PageWrapper title="Manage Doctors" breadcrumb={["Admin", "Doctors"]}>
+    <PageWrapper
+      title="Clinician Management"
+      breadcrumb={["Admin", "Clinicians"]}
+    >
       <div className="space-y-6">
         <form
           onSubmit={onSubmit}
@@ -113,12 +116,15 @@ export default function ManageDoctors() {
             </p>
           )}
           <button className="btn-primary" disabled={loading} type="submit">
-            {loading ? "Saving..." : "Add Doctor"}
+            {loading ? "Saving..." : "Add Clinician"}
           </button>
         </form>
 
         {doctors.length === 0 ? (
-          <EmptyState title="No doctors" message="Add your first doctor" />
+          <EmptyState
+            title="No clinicians"
+            message="Add your first clinician"
+          />
         ) : (
           <div className="card overflow-x-auto">
             <table className="w-full text-sm">
@@ -127,7 +133,8 @@ export default function ManageDoctors() {
                   <th className="py-2">Name</th>
                   <th>Email</th>
                   <th>Specialization</th>
-                  <th>Status</th>
+                  <th>Approval</th>
+                  <th>Access</th>
                   <th></th>
                 </tr>
               </thead>
@@ -137,6 +144,9 @@ export default function ManageDoctors() {
                     <td className="py-2">{doc.name}</td>
                     <td>{doc.email}</td>
                     <td>{doc.specialization || "-"}</td>
+                    <td className="capitalize">
+                      {doc.doctorApprovalStatus || "pending"}
+                    </td>
                     <td>{doc.isActive ? "Active" : "Inactive"}</td>
                     <td className="text-right">
                       <div className="flex items-center gap-2">
@@ -145,14 +155,14 @@ export default function ManageDoctors() {
                             className="btn-secondary"
                             onClick={() => toggleActive(doc._id, doc.isActive)}
                           >
-                            Approve
+                            Approve & Activate
                           </button>
                         ) : (
                           <button
                             className="btn-secondary"
                             onClick={() => toggleActive(doc._id, doc.isActive)}
                           >
-                            Deactivate
+                            Deactivate access
                           </button>
                         )}
                       </div>

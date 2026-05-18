@@ -30,10 +30,10 @@ export default function RegisterPatient() {
     setLoading(true);
     try {
       await createPatient(form);
-      toast.success("Patient registered");
+      toast.success("Patient registered successfully");
       setForm(initialForm);
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to register patient");
+      toast.error(err.response?.data?.message || "Unable to register patient");
     } finally {
       setLoading(false);
     }
@@ -52,7 +52,7 @@ export default function RegisterPatient() {
           </p>
         )}
         <button className="btn-primary" disabled={loading} type="submit">
-          {loading ? "Saving..." : "Register Patient"}
+          {loading ? "Saving..." : "Register patient"}
         </button>
       </form>
     </PageWrapper>

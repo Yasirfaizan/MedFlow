@@ -60,7 +60,7 @@ export default function PrescriptionDetail() {
         <div className="card">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <p className="text-sm text-gray-400">Prescribed by</p>
+              <p className="text-sm text-gray-400">Prescribing clinician</p>
               <p className="font-semibold text-gray-900">
                 Dr. {prescription?.doctorId?.name}
               </p>
@@ -79,7 +79,9 @@ export default function PrescriptionDetail() {
           </div>
 
           <div className="border-t border-gray-100 pt-4 mb-4">
-            <p className="text-xs font-medium text-gray-400 mb-3">MEDICINES</p>
+            <p className="text-xs font-medium text-gray-400 mb-3">
+              MEDICATIONS
+            </p>
             {prescription?.medicines?.map((med, i) => (
               <div
                 key={i}
@@ -96,7 +98,7 @@ export default function PrescriptionDetail() {
           {prescription?.instructions && (
             <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs font-medium text-gray-400 mb-1">
-                INSTRUCTIONS
+                CARE INSTRUCTIONS
               </p>
               <p className="text-sm text-gray-700">
                 {prescription.instructions}
@@ -114,7 +116,7 @@ export default function PrescriptionDetail() {
             ) : (
               <Download size={14} />
             )}
-            {downloading ? "Downloading..." : "Download PDF"}
+            {downloading ? "Downloading..." : "Download prescription PDF"}
           </button>
         </div>
 
@@ -137,7 +139,7 @@ export default function PrescriptionDetail() {
           </div>
         ) : (
           <div className="card text-sm text-gray-500">
-            Explanation not available. Please ask your doctor.
+            Explanation not available. Please consult your clinician.
           </div>
         )}
       </div>

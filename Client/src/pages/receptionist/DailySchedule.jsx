@@ -46,7 +46,7 @@ export default function DailySchedule() {
     >
       <div className="space-y-6">
         <div className="card">
-          <label className="text-sm text-gray-500">Select date</label>
+          <label className="text-sm text-gray-500">Schedule date</label>
           <input
             className="input-field mt-2"
             type="date"
@@ -60,7 +60,7 @@ export default function DailySchedule() {
             <thead>
               <tr className="text-left text-gray-500">
                 <th className="py-2">Patient</th>
-                <th>Doctor</th>
+                <th>Clinician</th>
                 <th>Time</th>
                 <th>Status</th>
                 <th></th>
@@ -83,7 +83,7 @@ export default function DailySchedule() {
                         className="btn-secondary"
                         onClick={() => onUpdateStatus(appt._id, "confirmed")}
                       >
-                        Confirm
+                        Confirm visit
                       </button>
                     )}
                     {appt.status !== "cancelled" &&
@@ -92,7 +92,7 @@ export default function DailySchedule() {
                           className="btn-danger"
                           onClick={() => onUpdateStatus(appt._id, "cancelled")}
                         >
-                          Cancel
+                          Cancel visit
                         </button>
                       )}
                   </td>
@@ -101,7 +101,9 @@ export default function DailySchedule() {
             </tbody>
           </table>
           {daily.length === 0 && (
-            <p className="text-sm text-gray-400 mt-4">No appointments found.</p>
+            <p className="text-sm text-gray-400 mt-4">
+              No appointments for the selected date.
+            </p>
           )}
         </div>
       </div>

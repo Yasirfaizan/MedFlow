@@ -8,9 +8,9 @@ import { getRiskFlags } from "../../api/ai.api";
 import toast from "react-hot-toast";
 
 const tabs = [
-  { key: "info", label: "Personal Info" },
+  { key: "info", label: "Personal details" },
   { key: "appointments", label: "Appointments" },
-  { key: "diagnosis", label: "Diagnosis" },
+  { key: "diagnosis", label: "Assessments" },
   { key: "prescriptions", label: "Prescriptions" },
   { key: "timeline", label: "Timeline" },
 ];
@@ -25,11 +25,11 @@ export default function PatientProfile() {
   useEffect(() => {
     getPatient(id)
       .then((res) => setPatient(res.data.data))
-      .catch(() => toast.error("Failed to load patient"));
+      .catch(() => toast.error("Unable to load patient profile"));
 
     getPatientHistory(id)
       .then((res) => setHistory(res.data.data))
-      .catch(() => toast.error("Failed to load history"));
+      .catch(() => toast.error("Unable to load patient history"));
 
     getRiskFlags(id)
       .then((res) => setRiskFlags(res.data.data.riskFlags || []))
@@ -50,10 +50,10 @@ export default function PatientProfile() {
           </div>
           <div className="flex gap-3">
             <Link to={`/doctor/diagnosis/${id}`} className="btn-secondary">
-              Add Diagnosis
+              Run assessment
             </Link>
             <Link to={`/doctor/prescription/${id}`} className="btn-primary">
-              Write Prescription
+              Issue prescription
             </Link>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function PatientProfile() {
               <p className="text-sm text-gray-800">{patient?.phone || "-"}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Blood Group</p>
+              <p className="text-xs text-gray-400">Blood group</p>
               <p className="text-sm text-gray-800">
                 {patient?.bloodGroup || "-"}
               </p>
@@ -93,7 +93,7 @@ export default function PatientProfile() {
               <p className="text-sm text-gray-800">{patient?.address || "-"}</p>
             </div>
             <div>
-              <p className="text-xs text-gray-400">Emergency Contact</p>
+              <p className="text-xs text-gray-400">Emergency contact</p>
               <p className="text-sm text-gray-800">
                 {patient?.emergencyContact || "-"}
               </p>
@@ -110,7 +110,9 @@ export default function PatientProfile() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-400">No appointments yet.</p>
+              <p className="text-sm text-gray-400">
+                No appointments on record.
+              </p>
             )}
           </div>
         )}
@@ -125,7 +127,9 @@ export default function PatientProfile() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-400">No diagnosis logs yet.</p>
+              <p className="text-sm text-gray-400">
+                No assessment records yet.
+              </p>
             )}
           </div>
         )}
@@ -136,11 +140,13 @@ export default function PatientProfile() {
               history.prescriptions.map((pres) => (
                 <div key={pres._id} className="text-sm text-gray-700">
                   {new Date(pres.createdAt).toLocaleDateString()} •{" "}
-                  {pres.medicines?.length} medicines
+                  {pres.medicines?.length} medications
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-400">No prescriptions yet.</p>
+              <p className="text-sm text-gray-400">
+                No prescriptions on record.
+              </p>
             )}
           </div>
         )}

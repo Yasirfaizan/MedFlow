@@ -29,13 +29,13 @@ export default function AddDiagnosis() {
         toast.error(res.data.message);
       } else {
         setAiResult(res.data.data.aiResult.data);
-        toast.success("AI analysis complete");
+        toast.success("AI assessment complete");
       }
     } catch (err) {
       if (err.response?.status === 403) {
-        toast.error("Upgrade to Pro for AI features");
+        toast.error("Upgrade to Pro for AI assessment features");
       } else {
-        toast.error("AI unavailable. Diagnosis saved manually.");
+        toast.error("Assessment unavailable. Document manually.");
       }
     } finally {
       setLoading(false);
@@ -44,11 +44,11 @@ export default function AddDiagnosis() {
 
   return (
     <PageWrapper
-      title="AI Symptom Checker"
-      breadcrumb={["Doctor", "Diagnosis"]}
+      title="AI Symptom Assessment"
+      breadcrumb={["Doctor", "Assessment"]}
     >
       <div className="max-w-2xl space-y-5">
-        <PlanGate feature="AI Symptom Checker">
+        <PlanGate feature="AI symptom assessment">
           <div className="card space-y-4">
             <form onSubmit={onSubmit} className="space-y-4">
               <SymptomChecker values={form} onChange={setForm} />
@@ -58,7 +58,7 @@ export default function AddDiagnosis() {
                 ) : (
                   <Brain size={14} />
                 )}
-                {loading ? "Analyzing..." : "Run AI Analysis"}
+                {loading ? "Analyzing..." : "Run AI assessment"}
               </button>
             </form>
           </div>
@@ -66,8 +66,8 @@ export default function AddDiagnosis() {
           {aiResult && (
             <div className="card">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                <Brain size={16} className="text-primary-500" /> AI Analysis
-                Result
+                <Brain size={16} className="text-primary-500" /> Assessment
+                Summary
               </h3>
               {aiResult.fallback ? (
                 <div className="flex items-center gap-2 text-yellow-600 bg-yellow-50 p-3 rounded-lg text-sm">

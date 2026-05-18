@@ -71,7 +71,9 @@ export default function Login() {
 
       // Restrict login to the selected role to avoid confusion
       if (loggedInUser.role !== role) {
-        toast.error(`This account is registered as a ${loggedInUser.role}, not a ${role}.`);
+        toast.error(
+          `This account is registered as a ${loggedInUser.role}, not a ${role}.`,
+        );
         return;
       }
 
@@ -89,19 +91,23 @@ export default function Login() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className={`w-14 h-14 ${config.accent} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-sm`}>
+          <div
+            className={`w-14 h-14 ${config.accent} rounded-2xl flex items-center justify-center mx-auto mb-4 text-white shadow-sm`}
+          >
             <Stethoscope size={28} />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">{config.title} Sign In</h1>
+          <h1 className="text-2xl font-bold text-gray-900">
+            {config.title} Access
+          </h1>
           <p className="text-gray-400 text-sm mt-1">
-            Sign in to your {config.title.toLowerCase()} dashboard
+            Secure sign-in for clinical operations
           </p>
         </div>
         <div className="card">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="text-sm font-medium text-gray-700 block mb-1">
-                Email Address
+                Email address
               </label>
               <input
                 {...register("email", {
@@ -143,7 +149,7 @@ export default function Login() {
               className={`w-full py-2.5 px-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50 ${config.buttonAccent} focus:outline-none`}
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </form>
 
@@ -154,7 +160,7 @@ export default function Login() {
               onClick={() => navigate(`/signup/${role}`)}
               className={`font-medium hover:underline ${config.textAccent}`}
             >
-              Sign up as {config.title}
+              Create {config.title} account
             </button>
           </div>
         </div>

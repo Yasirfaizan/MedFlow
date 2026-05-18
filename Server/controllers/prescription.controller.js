@@ -20,15 +20,21 @@ exports.createPrescription = async (req, res) => {
   }
 };
 
-// Patient fetches their own prescriptions (resolved by phone → clinical profile)
+// Patient fetches their own prescriptions (resolved by createdBy → phone fallback)
 exports.getMyPrescriptions = async (req, res) => {
   try {
     const userDoc = await User.findById(req.user.userId);
     if (!userDoc) return error(res, "User not found", 404);
 
-    const clinicalPatient = await Patient.findOne({ phone: userDoc.phone });
+    let clinicalPatient = await Patient.findOne({
+      createdBy: req.user.userId,
+    });
+
+    if (!clinicalPatient && userDoc.phone) {
+      clinicalPatient = await Patient.findOne({ phone: userDoc.phone });
+    }
+
     if (!clinicalPatient) {
-      // No clinical profile yet — return empty list gracefully
       return success(res, []);
     }
 

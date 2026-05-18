@@ -12,25 +12,25 @@ export default function SubscriptionManager() {
   };
 
   useEffect(() => {
-    loadUsers().catch(() => toast.error("Failed to load users"));
+    loadUsers().catch(() => toast.error("Unable to load users"));
   }, []);
 
   const updatePlan = async (userId, subscriptionPlan) => {
     try {
-      await api.patch("/admin/upgrade-plan", {
+      await api.patch("/users/admin/upgrade-plan", {
         userId,
         subscriptionPlan,
       });
-      toast.success("Plan updated");
+      toast.success("Subscription updated");
       loadUsers();
     } catch (err) {
-      toast.error("Failed to update plan");
+      toast.error("Unable to update subscription");
     }
   };
 
   return (
     <PageWrapper
-      title="Subscription Manager"
+      title="Subscription Administration"
       breadcrumb={["Admin", "Subscriptions"]}
     >
       <div className="card overflow-x-auto">

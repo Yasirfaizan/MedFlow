@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="clinicGradient" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1F6F78" />
+      <stop offset="1" stop-color="#29A37A" />
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#clinicGradient)" />
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#0E3B43" stroke-width="2" opacity="0.35" />
+  <rect x="29" y="16" width="6" height="32" rx="3" fill="#FFFFFF" />
+  <rect x="16" y="29" width="32" height="6" rx="3" fill="#FFFFFF" />
+</svg>

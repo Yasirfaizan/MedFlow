@@ -36,11 +36,11 @@ export default function WritePrescription() {
     const invalidMed = medicines.some(
       (m) => !m.name || !m.dosage || !m.frequency || !m.duration,
     );
-    if (invalidMed) return toast.error("Fill all medicine fields");
+    if (invalidMed) return toast.error("Complete all medication fields");
     setLoading(true);
     try {
       const res = await createPrescription({ ...data, patientId, medicines });
-      toast.success("Prescription created");
+      toast.success("Prescription issued");
 
       if (user?.subscriptionPlan === "pro") {
         await explainPrescription({ prescriptionId: res.data.data._id });
@@ -49,7 +49,7 @@ export default function WritePrescription() {
       navigate(-1);
     } catch (err) {
       toast.error(
-        err.response?.data?.message || "Failed to create prescription",
+        err.response?.data?.message || "Unable to issue prescription",
       );
     } finally {
       setLoading(false);
@@ -58,12 +58,12 @@ export default function WritePrescription() {
 
   return (
     <PageWrapper
-      title="Write Prescription"
+      title="Issue Prescription"
       breadcrumb={["Doctor", "Prescription"]}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-3xl space-y-5">
         <div className="card">
-          <h3 className="font-medium text-gray-800 mb-4">Medicines</h3>
+          <h3 className="font-medium text-gray-800 mb-4">Medications</h3>
           {medicines.map((med, i) => (
             <div key={i} className="mb-3">
               <MedicineRow
@@ -79,31 +79,31 @@ export default function WritePrescription() {
             onClick={addMedicine}
             className="btn-secondary text-sm mt-2"
           >
-            <Plus size={14} /> Add Medicine
+            <Plus size={14} /> Add medication
           </button>
         </div>
 
         <div className="card space-y-4">
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">
-              Diagnosis Notes
+              Clinical Notes
             </label>
             <textarea
               {...register("diagnosisNotes")}
               rows={3}
               className="input-field"
-              placeholder="Clinical notes..."
+              placeholder="Document assessment notes..."
             />
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">
-              Instructions for Patient
+              Patient Instructions
             </label>
             <textarea
               {...register("instructions")}
               rows={2}
               className="input-field"
-              placeholder="Take medicine after meals..."
+              placeholder="Provide usage guidance and precautions..."
             />
           </div>
           <div>
@@ -128,7 +128,7 @@ export default function WritePrescription() {
           </button>
           <button type="submit" disabled={loading} className="btn-primary">
             {loading && <Loader2 size={14} className="animate-spin" />}
-            {loading ? "Saving..." : "Save Prescription"}
+            {loading ? "Saving..." : "Issue prescription"}
           </button>
         </div>
       </form>

@@ -24,7 +24,7 @@ export default function ManageReceptionists() {
 
   useEffect(() => {
     loadReceptionists().catch(() =>
-      toast.error("Failed to load receptionists"),
+      toast.error("Unable to load reception staff"),
     );
   }, []);
 
@@ -39,11 +39,13 @@ export default function ManageReceptionists() {
     setLoading(true);
     try {
       await api.post("/users", { ...form, role: "receptionist" });
-      toast.success("Receptionist added");
+      toast.success("Reception staff added");
       setForm(initialForm);
       loadReceptionists();
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to add receptionist");
+      toast.error(
+        err.response?.data?.message || "Unable to add reception staff",
+      );
     } finally {
       setLoading(false);
     }
@@ -52,17 +54,17 @@ export default function ManageReceptionists() {
   const toggleActive = async (id, isActive) => {
     try {
       await api.put(`/users/${id}`, { isActive: !isActive });
-      toast.success("Status updated");
+      toast.success("Access updated");
       loadReceptionists();
     } catch (err) {
-      toast.error("Failed to update status");
+      toast.error("Unable to update access");
     }
   };
 
   return (
     <PageWrapper
-      title="Manage Receptionists"
-      breadcrumb={["Admin", "Receptionists"]}
+      title="Reception Staff Management"
+      breadcrumb={["Admin", "Reception Staff"]}
     >
       <div className="space-y-6">
         <form
@@ -101,14 +103,14 @@ export default function ManageReceptionists() {
             </p>
           )}
           <button className="btn-primary" disabled={loading} type="submit">
-            {loading ? "Saving..." : "Add Receptionist"}
+            {loading ? "Saving..." : "Add reception staff"}
           </button>
         </form>
 
         {users.length === 0 ? (
           <EmptyState
-            title="No receptionists"
-            message="Add your first receptionist"
+            title="No reception staff"
+            message="Add your first reception staff member"
           />
         ) : (
           <div className="card overflow-x-auto">
@@ -118,7 +120,8 @@ export default function ManageReceptionists() {
                   <th className="py-2">Name</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Status</th>
+                  <th>Approval</th>
+                  <th>Access</th>
                   <th></th>
                 </tr>
               </thead>
@@ -128,13 +131,16 @@ export default function ManageReceptionists() {
                     <td className="py-2">{rec.name}</td>
                     <td>{rec.email}</td>
                     <td>{rec.phone || "-"}</td>
+                    <td className="capitalize">
+                      {rec.receptionistApprovalStatus || "pending"}
+                    </td>
                     <td>{rec.isActive ? "Active" : "Inactive"}</td>
                     <td className="text-right">
                       <button
                         className="btn-secondary"
                         onClick={() => toggleActive(rec._id, rec.isActive)}
                       >
-                        {rec.isActive ? "Deactivate" : "Activate"}
+                        {rec.isActive ? "Deactivate access" : "Activate access"}
                       </button>
                     </td>
                   </tr>

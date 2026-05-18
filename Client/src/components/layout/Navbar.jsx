@@ -33,12 +33,12 @@ export default function Navbar({ breadcrumb = [] }) {
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <span className="text-xs bg-primary-50 text-primary-600 px-2 py-1 rounded-full capitalize">
+        <span className="text-[11px] bg-primary-50 text-primary-600 px-2 py-1 rounded-full uppercase tracking-wide">
           {user?.role}
         </span>
         <div className="text-sm font-medium text-gray-700">{user?.name}</div>
         <button className="btn-secondary" onClick={() => logout()}>
-          Logout
+          Sign out
         </button>
       </div>
     </header>

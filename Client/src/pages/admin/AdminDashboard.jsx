@@ -19,13 +19,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     getAdminStats()
       .then((res) => setStats(res.data.data))
-      .catch(() => toast.error("Failed to load stats"))
+      .catch(() => toast.error("Unable to load clinic metrics"))
       .finally(() => setLoading(false));
 
     if (user?.subscriptionPlan === "pro") {
       getPredictiveAnalytics()
         .then((res) => setPredictive(res.data.data))
-        .catch(() => toast.error("Failed to load predictive analytics"));
+        .catch(() => toast.error("Unable to load predictive analytics"));
     }
   }, []);
 
@@ -43,25 +43,25 @@ export default function AdminDashboard() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           <StatCard
-            title="Total Patients"
+            title="Total patients"
             value={stats?.totalPatients || 0}
             icon={Users}
             color="primary"
           />
           <StatCard
-            title="Total Doctors"
+            title="Clinicians"
             value={stats?.totalDoctors || 0}
             icon={Stethoscope}
             color="blue"
           />
           <StatCard
-            title="Monthly Appointments"
+            title="Appointments this month"
             value={stats?.monthlyAppointments || 0}
             icon={Calendar}
             color="yellow"
           />
           <StatCard
-            title="Receptionists"
+            title="Reception staff"
             value={stats?.totalReceptionists || 0}
             icon={Users}
             color="red"
@@ -71,18 +71,20 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="card">
             <h3 className="font-medium text-gray-800 mb-4">
-              Appointments by Status
+              Appointment status overview
             </h3>
             <AppointmentChart data={stats?.appointmentsByStatus || []} />
           </div>
 
           <div className="card">
-            <h3 className="font-medium text-gray-800 mb-4">Top Diagnoses</h3>
+            <h3 className="font-medium text-gray-800 mb-4">
+              Diagnosis distribution
+            </h3>
             {stats?.topDiagnoses?.length > 0 ? (
               <DiagnosisChart data={stats.topDiagnoses} />
             ) : (
               <div className="flex items-center justify-center h-48 text-gray-400 text-sm">
-                No diagnosis data yet
+                No diagnosis data available
               </div>
             )}
           </div>
@@ -90,7 +92,7 @@ export default function AdminDashboard() {
 
         <div className="card">
           <h3 className="font-medium text-gray-800 mb-4">
-            Patient Load Forecast
+            Patient load forecast
           </h3>
           {user?.subscriptionPlan === "pro" ? (
             <ForecastChart

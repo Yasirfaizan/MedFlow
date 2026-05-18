@@ -128,7 +128,7 @@ export default function MyAppointments() {
           <div className="card bg-white border border-gray-150 rounded-2xl p-6 shadow-sm transition-all">
             <h3 className="text-base font-bold text-gray-900 mb-4 flex items-center gap-2">
               <CalendarPlus size={18} className="text-green-600" />
-              Book New Appointment
+              Schedule appointment
             </h3>
             <form onSubmit={handleBookAppointment} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -143,7 +143,7 @@ export default function MyAppointments() {
                       setForm({ ...form, doctorId: e.target.value })
                     }
                   >
-                    <option value="">Choose doctor...</option>
+                    <option value="">Select clinician</option>
                     {doctors.map((d) => (
                       <option key={d._id} value={d._id}>
                         Dr. {d.name} ({d.specialization || "General"})
@@ -154,7 +154,7 @@ export default function MyAppointments() {
 
                 <div>
                   <label className="text-xs font-semibold text-gray-500 block mb-1">
-                    Appointment Date
+                    Appointment date
                   </label>
                   <input
                     className="input-field"
@@ -167,7 +167,7 @@ export default function MyAppointments() {
 
               <div>
                 <label className="text-xs font-semibold text-gray-500 block mb-2">
-                  Select Available Time Slot
+                  Select available time slot
                 </label>
                 <SlotPicker
                   value={form.timeSlot}
@@ -177,7 +177,7 @@ export default function MyAppointments() {
 
               <div>
                 <label className="text-xs font-semibold text-gray-500 block mb-1">
-                  Reason / Notes (Optional)
+                  Reason / Notes (optional)
                 </label>
                 <textarea
                   className="input-field"
@@ -207,7 +207,7 @@ export default function MyAppointments() {
                   {bookingLoading ? (
                     <Loader2 size={16} className="animate-spin" />
                   ) : null}
-                  {bookingLoading ? "Booking..." : "Book Appointment"}
+                  {bookingLoading ? "Scheduling..." : "Schedule appointment"}
                 </button>
               </div>
             </form>
@@ -222,7 +222,7 @@ export default function MyAppointments() {
                 Your Appointment History
               </h2>
               <p className="text-sm text-gray-500">
-                Track and manage your upcoming and completed visits.
+                Review upcoming and completed visits.
               </p>
             </div>
             {!showBookingForm && (
@@ -231,7 +231,7 @@ export default function MyAppointments() {
                 className="py-2 px-4 rounded-xl text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors flex items-center gap-1.5 shadow-sm"
               >
                 <CalendarPlus size={16} />
-                Book Appointment
+                Schedule appointment
               </button>
             )}
           </div>
@@ -275,7 +275,7 @@ export default function MyAppointments() {
                             <Badge color="red">Missed</Badge>
                             <span className="text-[10px] text-red-500 font-bold flex items-center gap-0.5">
                               <AlertTriangle size={10} />
-                              Amount Wasted
+                              No-show recorded
                             </span>
                           </div>
                         ) : (
@@ -308,7 +308,7 @@ export default function MyAppointments() {
                 onClick={() => setShowBookingForm(true)}
                 className="mt-3 text-xs font-semibold text-green-600 hover:underline"
               >
-                Book your first appointment now &rarr;
+                Schedule your first appointment &rarr;
               </button>
             </div>
           )}
