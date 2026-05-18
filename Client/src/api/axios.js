@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    "https://localhost:5000/api" ||
+    "http://localhost:5000/api" ||
     "https://medflow-production-9af6.up.railway.app/api",
 });
 
