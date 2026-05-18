@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-family:
+      "Space Grotesk",
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+  }
+  * {
+    @apply box-border;
+  }
+  .font-urdu {
+    font-family: "Noto Nastaliq Urdu", serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 disabled:opacity-50;
+  }
+  .btn-secondary {
+    @apply bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2;
+  }
+  .btn-danger {
+    @apply bg-danger-500 hover:bg-danger-700 text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  .input-field {
+    @apply w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+  .card {
+    @apply bg-white rounded-xl border border-gray-100 shadow-sm p-5;
+  }
+  .badge-green {
+    @apply bg-primary-50 text-primary-600 text-xs px-2 py-1 rounded-full font-medium;
+  }
+  .badge-yellow {
+    @apply bg-warning-50 text-warning-700 text-xs px-2 py-1 rounded-full font-medium;
+  }
+  .badge-red {
+    @apply bg-danger-50 text-danger-700 text-xs px-2 py-1 rounded-full font-medium;
+  }
+  .badge-blue {
+    @apply bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full font-medium;
+  }
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 hover:bg-primary-50 hover:text-primary-600 transition-colors text-sm font-medium;
+  }
+  .sidebar-link.active {
+    @apply bg-primary-50 text-primary-600;
+  }
+}
