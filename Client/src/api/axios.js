@@ -2,8 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:
-    "http://localhost:5000/api" ||
-    "https://medflow-production-9af6.up.railway.app/api",
+    import.meta.env.VITE_API_URL || "https://med-flow-server.vercel.app/api",
 });
 
 api.interceptors.request.use((config) => {
